@@ -14,7 +14,7 @@ public class RoomManager
     public RoomManager(WebsocketManager websocketManager)
     {
         _websocketManager = websocketManager;
-        _usersInRoom = new List<int>();
+        _usersInRoom = new List<Guid>();
     }
     
     /// <summary>
@@ -25,13 +25,13 @@ public class RoomManager
     /// <summary>
     /// The list of user connected in the room.
     /// </summary>
-    private List<int> _usersInRoom;
+    private List<Guid> _usersInRoom;
 
     /// <summary>
     /// Function to add a user to the room.
     /// </summary>
     /// <param name="userId">The user id.</param>
-    public void AddUserToRoom(int userId)
+    public void AddUserToRoom(Guid userId)
     {
         _usersInRoom.Add(userId);
     }
@@ -40,7 +40,7 @@ public class RoomManager
     /// Function to remove a user from the room.
     /// </summary>
     /// <param name="userId"></param>
-    public void RemoveUserFromRoom(int userId)
+    public void RemoveUserFromRoom(Guid userId)
     {
         _usersInRoom.Remove(userId);
     }
@@ -50,7 +50,7 @@ public class RoomManager
     /// </summary>
     /// <param name="userId">The user id of the connected person.</param>
     /// <param name="message">The message.</param>
-    public void SendMessageToRoom(int userId, string message)
+    public void SendMessageToRoom(Guid userId, string message)
     {
         foreach (var user in _usersInRoom) {
             if (userId != user)

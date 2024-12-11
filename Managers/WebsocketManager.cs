@@ -11,23 +11,23 @@ public class WebsocketManager
     /// <summary>
     /// Dictionary that contains the websocket connections with the user id.
     /// </summary>
-    private Dictionary<int, WebSocket> _connections = new Dictionary<int, WebSocket>();
+    private Dictionary<Guid, WebSocket> _connections = new Dictionary<Guid, WebSocket>();
 
     /// <summary>
     /// Function that adds a connection to the connection's dictionary.
     /// </summary>
     /// <param name="id">The user id.</param>
     /// <param name="socket">the websocket connection.</param>
-    public void AddConnection(int id, WebSocket socket)
+    public void AddConnection(Guid id, WebSocket socket)
     {
-         _connections[id] = socket;
+         _connections.Add(id, socket);
     }
 
     /// <summary>
     /// Function that removes a connection from the dictionary.
     /// </summary>
     /// <param name="id">The user id.</param>
-    public void RemoveConnection(int id)
+    public void RemoveConnection(Guid id)
     {
         _connections.Remove(id);
     }
@@ -37,7 +37,7 @@ public class WebsocketManager
     /// </summary>
     /// <param name="id">The user id.</param>
     /// <param name="message">The message.</param>
-    public void SendMessage(int id, string message)
+    public void SendMessage(Guid id, string message)
     {
         byte[] messageBytes = Encoding.Default.GetBytes(message);
         

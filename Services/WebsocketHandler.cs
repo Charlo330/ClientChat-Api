@@ -32,7 +32,7 @@ public class WebsocketHandler
                 throw new WebSocketException("UserId header is missing.");
             }
             
-            int id = int.Parse(userId!);
+            Guid id = Guid.Parse(userId!);
             
             WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
 
@@ -50,7 +50,7 @@ public class WebsocketHandler
     /// <param name="userId">The user id.</param>
     /// <param name="webSocket">The active websocket connection.</param>
     /// <returns>A task that represents the operation.</returns>
-    public async Task ProcessWebSocketAsync(int userId, WebSocket webSocket)
+    public async Task ProcessWebSocketAsync(Guid userId, WebSocket webSocket)
     {
         _websocketManager.AddConnection(userId, webSocket);
         _websocketManager.SendMessage(userId, userId.ToString());

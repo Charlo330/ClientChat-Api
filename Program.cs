@@ -1,5 +1,6 @@
 using chatApi;
 using chatApi.Managers;
+using chatApi.Repositeries;
 using chatApi.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,15 +11,16 @@ builder.Services.AddControllers(); // Add controller services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<CommandHandler>();
-builder.Services.AddScoped<WebsocketHandler>();
-builder.Services.AddSingleton<WebsocketManager>();
-builder.Services.AddSingleton<RoomService>();
-builder.Services.AddTransient<RoomManager>();
-
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+
+builder.Services.AddScoped<SqlRoomRepository>();
+builder.Services.AddScoped<RoomService>();
+builder.Services.AddScoped<WebsocketHandler>();
+builder.Services.AddSingleton<WebsocketManager>();
+builder.Services.AddScoped<CommandHandler>();
+builder.Services.AddTransient<RoomManager>();
 
 var app = builder.Build();
 

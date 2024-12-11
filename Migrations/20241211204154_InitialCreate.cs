@@ -44,8 +44,8 @@ namespace chatApi.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    creator = table.Column<string>(type: "text", nullable: false),
-                    description = table.Column<string>(type: "text", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
                     UsersId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>

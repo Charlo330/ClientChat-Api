@@ -9,7 +9,7 @@ public class AppDbContext : DbContext
     // Define your tables here
     public DbSet<Messages> Messages { get; set; }
     
-    public DbSet<Rooms> Rooms { get; set; }
+    public DbSet<Rooms?> Rooms { get; set; }
     
     public DbSet<Users> Users { get; set; }
 

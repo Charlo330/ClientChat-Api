@@ -12,7 +12,7 @@ using chatApi;
 namespace chatApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241202191208_InitialCreate")]
+    [Migration("20241211204154_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -55,20 +55,19 @@ namespace chatApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("CreatorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Guid?>("UsersId")
                         .HasColumnType("uuid");
-
-                    b.Property<string>("creator")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("description")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
