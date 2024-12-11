@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0
+﻿FROM mcr.microsoft.com/dotnet/sdk:8.0
 
 WORKDIR /src
 
@@ -10,6 +10,6 @@ RUN dotnet restore
 COPY . ./
 
 EXPOSE 80
-
+EXPOSE 443
 # You don't need to run dotnet watch here. It's done via docker-compose.
 # CMD ["dotnet", "run", "--urls=http://+:80"]

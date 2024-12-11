@@ -11,6 +11,14 @@ public class RoomService
     /// Dictionary that contains the RoomManager object with his id.
     /// </summary>
     private Dictionary<int, RoomManager> _rooms;
+    
+    private WebsocketManager _websocketManager;
+
+    public RoomService(WebsocketManager websocketManager)
+    {
+        _websocketManager = websocketManager;
+        _rooms = new Dictionary<int, RoomManager>();
+    }
 
     /// <summary>
     /// Function to add a Room to the dictionary.
@@ -29,6 +37,18 @@ public class RoomService
     public void RemoveRoom(int id)
     {
         _rooms.Remove(id);
+    }
+
+    public void AddUserToRoom(int roomId, int userId)
+    {
+        if (_rooms.TryGetValue(roomId, out RoomManager? manager))
+            manager.AddUserToRoom(userId);
+    }
+
+    public void CreateRoom(int id)
+    {
+        AddRoom(id, new RoomManager(_websocketManager));
+        
     }
 
     /// <summary>

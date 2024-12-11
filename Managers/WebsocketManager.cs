@@ -20,7 +20,7 @@ public class WebsocketManager
     /// <param name="socket">the websocket connection.</param>
     public void AddConnection(int id, WebSocket socket)
     {
-        _connections.Add(id, socket);
+         _connections[id] = socket;
     }
 
     /// <summary>

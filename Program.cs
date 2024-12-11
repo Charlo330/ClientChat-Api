@@ -1,5 +1,6 @@
 using chatApi;
 using chatApi.Managers;
+using chatApi.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,8 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(); // Add controller services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<WebsocketHandler>();
+
+builder.Services.AddScoped<CommandHandler>();
+builder.Services.AddScoped<WebsocketHandler>();
 builder.Services.AddSingleton<WebsocketManager>();
+builder.Services.AddSingleton<RoomService>();
+builder.Services.AddTransient<RoomManager>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
@@ -32,8 +37,11 @@ app.MapControllers(); // Map attribute-defined routes in controllers
 
 app.UseWebSockets();
 
-WebsocketHandler websocketHandler = app.Services.GetRequiredService<WebsocketHandler>();
-
-app.Map("/ws", websocketHandler.HandleWebSocketAsync);
+app.Map("/ws", async context =>
+    {
+        using var scope = context.RequestServices.CreateScope();
+        var websocketHandler = scope.ServiceProvider.GetRequiredService<WebsocketHandler>();
+        await websocketHandler.HandleWebSocketAsync(context);
+    });
 
 app.Run();
